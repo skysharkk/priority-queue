@@ -55,29 +55,20 @@ class MaxHeap {
 	}
 
 	shiftNodeUp(node) {
-		if (!node.parent) {
-			this.root = node;
-			let tempNode = this.root;
-			while (tempNode.left && tempNode.right) {
-				if (this.parentNodes.length === 0) {
-					this.parentNodes.push(tempNode);
-				}
+        if (!node.parent) {
+            this.root = node;
+            return this.root;
+        } else {
+            if (node.priority > node.parent.priority) {
 
-				if (this.parentNodes.indexOf(tempNode.right) === -1) {
-					this.parentNodes.push(tempNode.right);
-				}
-
-				if (this.parentNodes.indexOf(tempNode.left) === -1) {
-					this.parentNodes.push(tempNode.left);
-				}
-
-				tempNode = tempNode.left;
-			}
-			return this.root;
-		} else {
-			node.swapWithParent();
-			return this.shiftNodeUp(node);
-		}
+                let parentIndex = this.parentNodes.indexOf(node.parent);
+                let nodeIndex = this.parentNodes.indexOf(node);
+                this.parentNodes[parentIndex] = node;
+                this.parentNodes[nodeIndex] = node.parent;
+                node.swapWithParent();
+                return this.shiftNodeUp(node);
+            }
+        }
 	}
 
 	shiftNodeDown(node) {
@@ -87,19 +78,19 @@ class MaxHeap {
 
 module.exports = MaxHeap;
 
-h = new MaxHeap();
-
+// h = new MaxHeap();
+//
 // h.root = new Node(0, 10);
 // h.root.appendChild(new Node(1, 5));
 // h.root.appendChild(new Node(2, 7));
 // h.root.left.appendChild(new Node(3, 20));
-
+//
 // h.shiftNodeUp(h.root.left.left);
 
 // console.log(h.root);
 // console.log(h.root.right);
 // console.log(h.root.left);
-// console.log(h.parentNodes[2]);
+// console.log(h.parentNodes);
 
 
 
